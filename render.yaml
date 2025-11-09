@@ -1,20 +1,20 @@
 services:
   - type: web
     name: turbothrill-n8n
-    env: node
+    env: docker
     plan: free
-    buildCommand: npm install -g n8n
-    startCommand: n8n start
+    autoDeploy: true
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: N8N_BASIC_AUTH_ACTIVE
-        value: true
+        value: "true"
       - key: N8N_BASIC_AUTH_USER
-        value: admin
+        value: "admin"
       - key: N8N_BASIC_AUTH_PASSWORD
-        value: turbothrill123
+        value: "ChangeThisPassword123!"
+      - key: WEBHOOK_TUNNEL_URL
+        value: "https://turbothrill-n8n.onrender.com"
       - key: GENERIC_TIMEZONE
-        value: Asia/Kolkata
-      - key: EXECUTIONS_DATA_PRUNE
-        value: true
-      - key: EXECUTIONS_DATA_MAX_AGE
-        value: 168
+        value: "Asia/Kolkata"
+    # If you want to provide secrets via render dashboard instead of in YAML,
+    # remove sensitive values here and add them in the Render dashboard as ENV vars / secrets.
