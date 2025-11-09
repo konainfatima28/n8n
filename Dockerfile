@@ -1,21 +1,10 @@
-# Use official Node.js LTS image
-FROM node:18-alpine
+# Use official n8n image
+FROM n8nio/n8n:latest
 
-# Set working directory
-WORKDIR /app
+# Optional: copy custom credentials or workflows if you have them in repo
+# COPY ./workflows /home/node/.n8n/workflows
 
-# Copy n8n source code
-COPY . .
-
-# Install dependencies
-RUN npm install -g n8n
-
-# Expose n8n port
+# Expose default n8n port
 EXPOSE 5678
 
-# Set environment variables
-ENV N8N_HOST=0.0.0.0
-ENV N8N_PORT=5678
-
-# Start n8n
-CMD ["n8n", "start"]
+# Entrypoint and default command are handled by the base image (n8n)
