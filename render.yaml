@@ -1,3 +1,7 @@
+# Render manifest for turbothrill-n8n
+# NOTE: Do NOT store secrets (passwords, DB URLs, encryption keys) in this file.
+# Add secrets in the Render dashboard (Service -> Environment or Secret Files).
+
 services:
   - type: web
     name: turbothrill-n8n
@@ -11,14 +15,47 @@ services:
         value: "true"
       - key: N8N_BASIC_AUTH_USER
         value: "admin"
+      # Do NOT put the production password here if you commit this file.
       - key: N8N_BASIC_AUTH_PASSWORD
-        value: "ChangeThisPassword123!"
+        value: "ChangeThisPassword123!" # replace in dashboard and rotate
       - key: WEBHOOK_TUNNEL_URL
         value: "https://turbothrill-n8n.onrender.com"
       - key: GENERIC_TIMEZONE
         value: "Asia/Kolkata"
       - key: DB_TYPE
         value: "postgresdb"
-      # Do not put the actual DATABASE_URL here — add it via Render dashboard instead:
-      # - key: DATABASE_URL
-      #   value: "postgres://<user>:<pass>@<host>:5432/<db>"
+      # The following DB_* entries are placeholders. Add real values in the Render UI
+      # or use Render Secrets to inject DATABASE_URL. Do NOT commit real credentials.
+      - key: DB_POSTGRESDB_HOST
+        value: "<DB_HOST_PLACEHOLDER>"
+      - key: DB_POSTGRESDB_PORT
+        value: "5432"
+      - key: DB_POSTGRESDB_DATABASE
+        value: "<DB_NAME_PLACEHOLDER>"
+      - key: DB_POSTGRESDB_USER
+        value: "<DB_USER_PLACEHOLDER>"
+      - key: DB_POSTGRESDB_PASSWORD
+        value: "<DB_PASS_PLACEHOLDER>"
+      - key: DB_POSTGRESDB_SSL_ENABLED
+        value: "true"
+      - key: DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED
+        value: "false" # safe to keep false for Render internal connections; set to true + SSL_CA for strict TLS
+      - key: N8N_PUBLIC_URL
+        value: "https://turbothrill-n8n.onrender.com"
+
+# Optional: declare a managed database to be provisioned by Render (if you prefer to create DB via IaC)
+# Note: if you create the database here, Render will generate credentials; treat them as secrets.
+
+databases:
+  - name: turbothrill-postgres
+    engine: postgres
+    plan: free # change to starter/standard for production
+    region: oregon # change to the same region as your service; render uses region slugs
+
+# End of manifest
+# Usage:
+# 1) Add this file to your repo (git). Keep placeholders in place.
+# 2) In Render Dashboard, create secrets/environment variables for the DB and encryption key.
+#    - DATABASE_URL or the DB_POSTGRESDB_* vars
+#    - N8N_ENCRYPTION_KEY (generate with `openssl rand -base64 32`)
+# 3) Deploy on Render (link Git repo). Rotate any credentials accidentally committed.
