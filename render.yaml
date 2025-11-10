@@ -5,6 +5,7 @@ services:
     plan: free
     autoDeploy: true
     dockerfilePath: ./Dockerfile
+    startCommand: n8n start --port $PORT
     envVars:
       - key: N8N_BASIC_AUTH_ACTIVE
         value: "true"
