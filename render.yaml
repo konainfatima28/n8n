@@ -16,7 +16,5 @@ services:
         value: "https://turbothrill-n8n.onrender.com"
       - key: GENERIC_TIMEZONE
         value: "Asia/Kolkata"
-      - Key: DB_TYPE
-        Value: "postgresdb"
     # If you want to provide secrets via render dashboard instead of in YAML,
     # remove sensitive values here and add them in the Render dashboard as ENV vars / secrets.
