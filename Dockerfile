@@ -7,7 +7,7 @@ ENV N8N_PROTOCOL=https
 ENV N8N_HOST=0.0.0.0
 ENV N8N_PUBLIC_URL=https://turbothrill-n8n.onrender.com
 ENV WEBHOOK_TUNNEL_URL=https://turbothrill-n8n.onrender.com
-N8N_SMARTLINK_SECRET=TT_S3cr3t_2025
+ENV N8N_SMARTLINK_SECRET=TT_S3cr3t_2025
 
 # Expose default n8n port
 EXPOSE 5678
